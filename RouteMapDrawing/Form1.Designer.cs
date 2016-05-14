@@ -73,11 +73,29 @@
             this.tbTitle = new System.Windows.Forms.TextBox();
             this.lbTitle = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tbLineLocation = new System.Windows.Forms.TextBox();
+            this.lbLineLocation = new System.Windows.Forms.Label();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.lbWMrightmargin = new System.Windows.Forms.Label();
+            this.tbWMRightMargin = new System.Windows.Forms.TextBox();
+            this.lbWMCustomize = new System.Windows.Forms.Label();
+            this.lbWMLine3 = new System.Windows.Forms.Label();
+            this.lbWMLine2 = new System.Windows.Forms.Label();
+            this.lbWMLine1 = new System.Windows.Forms.Label();
+            this.tbWMLine3 = new System.Windows.Forms.TextBox();
+            this.tbWMLine2 = new System.Windows.Forms.TextBox();
+            this.tbWMLine1 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lbDate = new System.Windows.Forms.Label();
+            this.tbversion = new System.Windows.Forms.TextBox();
+            this.tbDate = new System.Windows.Forms.TextBox();
+            this.checkBoxWaterMark = new System.Windows.Forms.CheckBox();
             this.ckBoxOverwrite = new System.Windows.Forms.CheckBox();
             this.LstViewMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.MenuEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.MenuGiveUpInter = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuGiveUpInter = new System.Windows.Forms.ToolStripMenuItem();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -87,6 +105,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarG)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarR)).BeginInit();
+            this.tabPage3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.LstViewMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -205,12 +225,12 @@
             // colheadEnname
             // 
             this.colheadEnname.Text = "英文";
-            this.colheadEnname.Width = 100;
+            this.colheadEnname.Width = 160;
             // 
             // colheadLineNum
             // 
             this.colheadLineNum.Text = "换乘";
-            this.colheadLineNum.Width = 160;
+            this.colheadLineNum.Width = 120;
             // 
             // colheadX
             // 
@@ -289,6 +309,7 @@
             this.tabControl.Controls.Add(this.tabPage1);
             this.tabControl.Controls.Add(this.tabPage2);
             this.tabControl.Controls.Add(this.tabPage3);
+            this.tabControl.Controls.Add(this.tabPage4);
             this.tabControl.Location = new System.Drawing.Point(727, 171);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
@@ -315,6 +336,7 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.White;
+            this.tabPage2.Controls.Add(this.button1);
             this.tabPage2.Controls.Add(this.btnSetBkColor);
             this.tabPage2.Controls.Add(this.btnSetLineColor);
             this.tabPage2.Controls.Add(this.picBoxShowColor);
@@ -342,9 +364,9 @@
             // btnSetBkColor
             // 
             this.btnSetBkColor.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnSetBkColor.Location = new System.Drawing.Point(256, 316);
+            this.btnSetBkColor.Location = new System.Drawing.Point(162, 316);
             this.btnSetBkColor.Name = "btnSetBkColor";
-            this.btnSetBkColor.Size = new System.Drawing.Size(162, 49);
+            this.btnSetBkColor.Size = new System.Drawing.Size(137, 49);
             this.btnSetBkColor.TabIndex = 16;
             this.btnSetBkColor.Text = "设为背景颜色";
             this.btnSetBkColor.UseVisualStyleBackColor = true;
@@ -353,9 +375,9 @@
             // btnSetLineColor
             // 
             this.btnSetLineColor.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnSetLineColor.Location = new System.Drawing.Point(57, 316);
+            this.btnSetLineColor.Location = new System.Drawing.Point(13, 316);
             this.btnSetLineColor.Name = "btnSetLineColor";
-            this.btnSetLineColor.Size = new System.Drawing.Size(162, 49);
+            this.btnSetLineColor.Size = new System.Drawing.Size(139, 49);
             this.btnSetLineColor.TabIndex = 15;
             this.btnSetLineColor.Text = "设为线路颜色";
             this.btnSetLineColor.UseVisualStyleBackColor = true;
@@ -496,11 +518,167 @@
             // tabPage3
             // 
             this.tabPage3.BackColor = System.Drawing.Color.White;
+            this.tabPage3.Controls.Add(this.tbLineLocation);
+            this.tabPage3.Controls.Add(this.lbLineLocation);
             this.tabPage3.Location = new System.Drawing.Point(4, 30);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(477, 396);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "绘制参数";
+            // 
+            // tbLineLocation
+            // 
+            this.tbLineLocation.Location = new System.Drawing.Point(131, 36);
+            this.tbLineLocation.Name = "tbLineLocation";
+            this.tbLineLocation.Size = new System.Drawing.Size(142, 30);
+            this.tbLineLocation.TabIndex = 1;
+            // 
+            // lbLineLocation
+            // 
+            this.lbLineLocation.AutoSize = true;
+            this.lbLineLocation.Location = new System.Drawing.Point(17, 39);
+            this.lbLineLocation.Name = "lbLineLocation";
+            this.lbLineLocation.Size = new System.Drawing.Size(99, 20);
+            this.lbLineLocation.TabIndex = 0;
+            this.lbLineLocation.Text = "线路位置:";
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.lbWMrightmargin);
+            this.tabPage4.Controls.Add(this.tbWMRightMargin);
+            this.tabPage4.Controls.Add(this.lbWMCustomize);
+            this.tabPage4.Controls.Add(this.lbWMLine3);
+            this.tabPage4.Controls.Add(this.lbWMLine2);
+            this.tabPage4.Controls.Add(this.lbWMLine1);
+            this.tabPage4.Controls.Add(this.tbWMLine3);
+            this.tabPage4.Controls.Add(this.tbWMLine2);
+            this.tabPage4.Controls.Add(this.tbWMLine1);
+            this.tabPage4.Controls.Add(this.label2);
+            this.tabPage4.Controls.Add(this.lbDate);
+            this.tabPage4.Controls.Add(this.tbversion);
+            this.tabPage4.Controls.Add(this.tbDate);
+            this.tabPage4.Controls.Add(this.checkBoxWaterMark);
+            this.tabPage4.Location = new System.Drawing.Point(4, 30);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(477, 396);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "水印定制";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // lbWMrightmargin
+            // 
+            this.lbWMrightmargin.AutoSize = true;
+            this.lbWMrightmargin.Location = new System.Drawing.Point(270, 17);
+            this.lbWMrightmargin.Name = "lbWMrightmargin";
+            this.lbWMrightmargin.Size = new System.Drawing.Size(79, 20);
+            this.lbWMrightmargin.TabIndex = 13;
+            this.lbWMrightmargin.Text = "右边距:";
+            // 
+            // tbWMRightMargin
+            // 
+            this.tbWMRightMargin.Location = new System.Drawing.Point(355, 14);
+            this.tbWMRightMargin.Name = "tbWMRightMargin";
+            this.tbWMRightMargin.Size = new System.Drawing.Size(103, 30);
+            this.tbWMRightMargin.TabIndex = 12;
+            // 
+            // lbWMCustomize
+            // 
+            this.lbWMCustomize.AutoSize = true;
+            this.lbWMCustomize.Location = new System.Drawing.Point(23, 165);
+            this.lbWMCustomize.Name = "lbWMCustomize";
+            this.lbWMCustomize.Size = new System.Drawing.Size(219, 20);
+            this.lbWMCustomize.TabIndex = 11;
+            this.lbWMCustomize.Text = "自定义水印(暂不支持):";
+            // 
+            // lbWMLine3
+            // 
+            this.lbWMLine3.AutoSize = true;
+            this.lbWMLine3.Location = new System.Drawing.Point(30, 319);
+            this.lbWMLine3.Name = "lbWMLine3";
+            this.lbWMLine3.Size = new System.Drawing.Size(79, 20);
+            this.lbWMLine3.TabIndex = 10;
+            this.lbWMLine3.Text = "第三行:";
+            // 
+            // lbWMLine2
+            // 
+            this.lbWMLine2.AutoSize = true;
+            this.lbWMLine2.Location = new System.Drawing.Point(25, 266);
+            this.lbWMLine2.Name = "lbWMLine2";
+            this.lbWMLine2.Size = new System.Drawing.Size(79, 20);
+            this.lbWMLine2.TabIndex = 9;
+            this.lbWMLine2.Text = "第二行:";
+            // 
+            // lbWMLine1
+            // 
+            this.lbWMLine1.AutoSize = true;
+            this.lbWMLine1.Location = new System.Drawing.Point(25, 211);
+            this.lbWMLine1.Name = "lbWMLine1";
+            this.lbWMLine1.Size = new System.Drawing.Size(79, 20);
+            this.lbWMLine1.TabIndex = 8;
+            this.lbWMLine1.Text = "第一行:";
+            // 
+            // tbWMLine3
+            // 
+            this.tbWMLine3.Location = new System.Drawing.Point(115, 316);
+            this.tbWMLine3.Name = "tbWMLine3";
+            this.tbWMLine3.Size = new System.Drawing.Size(297, 30);
+            this.tbWMLine3.TabIndex = 7;
+            // 
+            // tbWMLine2
+            // 
+            this.tbWMLine2.Location = new System.Drawing.Point(115, 263);
+            this.tbWMLine2.Name = "tbWMLine2";
+            this.tbWMLine2.Size = new System.Drawing.Size(297, 30);
+            this.tbWMLine2.TabIndex = 6;
+            // 
+            // tbWMLine1
+            // 
+            this.tbWMLine1.Location = new System.Drawing.Point(115, 208);
+            this.tbWMLine1.Name = "tbWMLine1";
+            this.tbWMLine1.Size = new System.Drawing.Size(297, 30);
+            this.tbWMLine1.TabIndex = 5;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(66, 104);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(179, 20);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "版本(默认Ver1.0):";
+            // 
+            // lbDate
+            // 
+            this.lbDate.AutoSize = true;
+            this.lbDate.Location = new System.Drawing.Point(66, 65);
+            this.lbDate.Name = "lbDate";
+            this.lbDate.Size = new System.Drawing.Size(179, 20);
+            this.lbDate.TabIndex = 3;
+            this.lbDate.Text = "日期(默认按今日):";
+            // 
+            // tbversion
+            // 
+            this.tbversion.Location = new System.Drawing.Point(251, 101);
+            this.tbversion.Name = "tbversion";
+            this.tbversion.Size = new System.Drawing.Size(161, 30);
+            this.tbversion.TabIndex = 2;
+            // 
+            // tbDate
+            // 
+            this.tbDate.Location = new System.Drawing.Point(251, 62);
+            this.tbDate.Name = "tbDate";
+            this.tbDate.Size = new System.Drawing.Size(161, 30);
+            this.tbDate.TabIndex = 1;
+            // 
+            // checkBoxWaterMark
+            // 
+            this.checkBoxWaterMark.AutoSize = true;
+            this.checkBoxWaterMark.Location = new System.Drawing.Point(19, 16);
+            this.checkBoxWaterMark.Name = "checkBoxWaterMark";
+            this.checkBoxWaterMark.Size = new System.Drawing.Size(191, 24);
+            this.checkBoxWaterMark.TabIndex = 0;
+            this.checkBoxWaterMark.Text = "使用@方包子 水印";
+            this.checkBoxWaterMark.UseVisualStyleBackColor = true;
             // 
             // ckBoxOverwrite
             // 
@@ -522,28 +700,39 @@
             this.MenuDelete,
             this.MenuGiveUpInter});
             this.LstViewMenu.Name = "contextMenuStrip1";
-            this.LstViewMenu.Size = new System.Drawing.Size(182, 110);
+            this.LstViewMenu.Size = new System.Drawing.Size(175, 82);
             // 
             // MenuEdit
             // 
             this.MenuEdit.Name = "MenuEdit";
-            this.MenuEdit.Size = new System.Drawing.Size(181, 26);
+            this.MenuEdit.Size = new System.Drawing.Size(174, 26);
             this.MenuEdit.Text = "编辑";
             this.MenuEdit.Click += new System.EventHandler(this.MenuEdit_Click);
-            // 
-            // MenuGiveUpInter
-            // 
-            this.MenuGiveUpInter.Name = "MenuGiveUpInter";
-            this.MenuGiveUpInter.Size = new System.Drawing.Size(181, 26);
-            this.MenuGiveUpInter.Text = "清空换乘信息";
-            this.MenuGiveUpInter.Click += new System.EventHandler(this.MenuGiveUpInter_Click);
             // 
             // MenuDelete
             // 
             this.MenuDelete.Name = "MenuDelete";
-            this.MenuDelete.Size = new System.Drawing.Size(181, 26);
+            this.MenuDelete.Size = new System.Drawing.Size(174, 26);
             this.MenuDelete.Text = "删除站点";
             this.MenuDelete.Click += new System.EventHandler(this.MenuDelete_Click);
+            // 
+            // MenuGiveUpInter
+            // 
+            this.MenuGiveUpInter.Name = "MenuGiveUpInter";
+            this.MenuGiveUpInter.Size = new System.Drawing.Size(174, 26);
+            this.MenuGiveUpInter.Text = "清空换乘信息";
+            this.MenuGiveUpInter.Click += new System.EventHandler(this.MenuGiveUpInter_Click);
+            // 
+            // button1
+            // 
+            this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.button1.Location = new System.Drawing.Point(310, 316);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(161, 49);
+            this.button1.TabIndex = 17;
+            this.button1.Text = "设为未开通颜色";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 
@@ -576,6 +765,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarG)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarR)).EndInit();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.LstViewMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -633,5 +826,23 @@
         private System.Windows.Forms.ToolStripMenuItem MenuEdit;
         private System.Windows.Forms.ToolStripMenuItem MenuGiveUpInter;
         private System.Windows.Forms.ToolStripMenuItem MenuDelete;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.CheckBox checkBoxWaterMark;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lbDate;
+        private System.Windows.Forms.TextBox tbversion;
+        private System.Windows.Forms.TextBox tbDate;
+        private System.Windows.Forms.Label lbWMLine3;
+        private System.Windows.Forms.Label lbWMLine2;
+        private System.Windows.Forms.Label lbWMLine1;
+        private System.Windows.Forms.TextBox tbWMLine3;
+        private System.Windows.Forms.TextBox tbWMLine2;
+        private System.Windows.Forms.TextBox tbWMLine1;
+        private System.Windows.Forms.Label lbWMCustomize;
+        private System.Windows.Forms.Label lbWMrightmargin;
+        private System.Windows.Forms.TextBox tbWMRightMargin;
+        private System.Windows.Forms.TextBox tbLineLocation;
+        private System.Windows.Forms.Label lbLineLocation;
+        private System.Windows.Forms.Button button1;
     }
 }

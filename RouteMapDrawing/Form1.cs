@@ -17,7 +17,7 @@ namespace RouteMapDrawing
         public Form1()
         {
             InitializeComponent();
-            Text = "Route Map Drawing System v0.10 ---- by MrDong";
+            Text = "Route Map Drawing System " + version + " ---- by MrDong";
 
             // 不可缩放
             FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -43,7 +43,8 @@ namespace RouteMapDrawing
 
             // lbFootnote的内容
             lbFootnote.Text = "注：1. 添加站点到序号对应站点的后方；";
-            lbFootnote.Text += "\n    2. 暂不支持按站点名删除站点。";
+            lbFootnote.Text += "\n    2. 选中站点右键可以编辑部分信息。";
+            lbFootnote.Text += "\n    3. 中文站名+空格+英文站名再回车就能输入一个站点。";
 
             // 标题默认值
             tbTitle.Text = "标题想多长有多长";
@@ -53,7 +54,15 @@ namespace RouteMapDrawing
             tbColorR.Text = "0";
             tbColorG.Text = "0";
             tbColorB.Text = "0";
+
+            // 显示水印的右边距
+            tbWMRightMargin.Text = watermarkrightmargin.ToString();
+            tbLineLocation.Text = interchangewidth.ToString();
         }
+
+        public static string version = "v0.11"; // 当前版本
+        public static string drawingdate = DateTime.Now.ToShortDateString().ToString();
+        public static string mapversion = "Ver1.0";
 
         public static int flag = 0;    // 判断是否创建成功
         string path, filename;     // 文件存储路径
@@ -64,13 +73,19 @@ namespace RouteMapDrawing
 
         // 绘制所需的参数（填充颜色在theline.hatchcolor中）
         public static Color mapbkcolor = Color.FromArgb(255,255,255); // 图片底色
+        public static Color notopencolor = Color.FromArgb(195, 187, 173); // 未开通颜色
         public static Pen stationpen = new Pen(Color.Black, 20); // 画站点的笔
+        public static Pen notopenpen = new Pen(notopencolor, 20); // 未开通的笔
         public static Pen linepen = new Pen(Color.Black, 1); // 默认的笔
 
         public static string title = "";  // 图片标题
         public static int titlelocation = 100; // 标题到图片顶端的距离
         public static int titlefontsize = 120; // 标题字号 
         public static Font titlefont = new Font("黑体", titlefontsize, FontStyle.Regular); // 标题字体
+
+        public static int watermarklocation = titlelocation + 220; // 水印到图片顶端的距离
+        public static Font watermarkfont = new Font("宋体", 50, FontStyle.Regular); // 水印字体
+        public static int watermarkrightmargin = 200; // 水印右边缘到图片右边线的距离
 
         public static int stchfontsize = 80;    // 中文站点字号
         public static int stenfontsize = 60;    // 英文站点字号
@@ -82,6 +97,7 @@ namespace RouteMapDrawing
         public static int interchangewidth = 400; // 预设的换乘信息区域宽度
         public static int linestart = 600;      // 站点顶端线路弧到图片顶端的距离
         public static int lineend = 100;        // 站点底端线路弧到图片底端的距离
+
         // 保存图片，成功与否用flag标定
         private void SavePic()
         {
@@ -126,12 +142,34 @@ namespace RouteMapDrawing
             Font chfont = new Font("黑体", stchfontsize, (FontStyle.Bold));
             Font enfont = new Font("Arial", stenfontsize, (FontStyle.Regular));
 
+            // 水印
+            string wm1 = tbWMLine1.Text;
+            string wm2 = tbWMLine2.Text;
+            string wm3 = tbWMLine3.Text;
+            if (checkBoxWaterMark.Checked)
+            {
+                wm1 = "同济大学交通运输工程学院 @方包子 制作";
+                wm2 = "由@wklchris 绘图器RMD " + version + " 协力绘制";
+                wm3 = drawingdate.Replace("/", ".") + " " + mapversion + " 版权所有";
+            }
+
+            // 计算水印区的宽度
+            Bitmap bmtest = new Bitmap(100, 100);
+            Graphics gtest = Graphics.FromImage(bmtest);
+            int wmwidth1 = (int)Math.Ceiling(gtest.MeasureString(wm1, watermarkfont).Width);
+            int wmwidth2 = (int)Math.Ceiling(gtest.MeasureString(wm2, watermarkfont).Width);
+            int wmwidth3 = (int)Math.Ceiling(gtest.MeasureString(wm3, watermarkfont).Width);
+            // 图片的一半宽度应该达到：
+            int wm_imagewidth = Math.Max(Math.Max(wmwidth1, wmwidth2), wmwidth3);
+            
+            if (tbLineLocation.Text!="")
+                interchangewidth = int.Parse(tbLineLocation.Text);
             // 获取图片的长和宽
             int templength = interchangewidth + line_r + st_line_d + theline.getLongest(chfont, enfont);
             int image_width = (int)Math.Ceiling(title.Length * 1.6 * titlefontsize); // 汉字两倍宽
-            image_width = Math.Max(templength, image_width);
+            image_width = Math.Max(Math.Max(templength, image_width), wm_imagewidth * 2 + watermarkrightmargin);
             int image_height = linestart + line_r * 2 + R * 2 + (theline.getLength() - 1) * st_st_d + lineend;
-
+            
             image = new Bitmap(image_width, image_height);
 
 
@@ -146,10 +184,29 @@ namespace RouteMapDrawing
             using (StringFormat centersf = new StringFormat())
             {
                 centersf.Alignment = StringAlignment.Center;
-                centersf.FormatFlags = StringFormatFlags.LineLimit;
 
                 g.DrawString(title, titlefont, Brushes.Black,
                     new Rectangle(10, titlelocation, image_width - 10, image_height), centersf);
+            }
+
+            // 绘制水印（副标题）
+            if (checkBoxWaterMark.Checked)
+            {
+                if (tbDate.Text!="")
+                    drawingdate = tbDate.Text;
+                if (tbversion.Text != "")
+                    mapversion = tbversion.Text;
+                if (tbWMRightMargin.Text != "")
+                    watermarkrightmargin = int.Parse(tbWMRightMargin.Text);
+
+                using (StringFormat centerwm = new StringFormat())
+                {
+                    centerwm.Alignment = StringAlignment.Far;
+
+                    g.DrawString(wm1 + "\n" + wm2 + "\n" + wm3, watermarkfont, Brushes.Black,
+                        new Rectangle(0, watermarklocation,
+                            image_width / 2 + wm_imagewidth, image_height), centerwm);
+                }
             }
 
             // 绘制线路中心线
@@ -178,8 +235,9 @@ namespace RouteMapDrawing
             theline.gotoHead();
             while (!theline.isEnd())
             {
-                // 填充白色
-                g.DrawEllipse(stationpen, new Rectangle(interchangewidth - R, st_leftuppoint, 2 * R, 2 * R));
+                // 填充白色，如果未开通则边界画灰色
+                g.DrawEllipse(theline.getValue().getIsOpenSt()?stationpen:notopenpen,
+                    new Rectangle(interchangewidth - R, st_leftuppoint, 2 * R, 2 * R));
                 g.FillEllipse(Brushes.White,
                     new Rectangle(interchangewidth - R, st_leftuppoint, 2 * R, 2 * R));
                 // 测量中英文绘制后在图上的尺寸
@@ -188,16 +246,17 @@ namespace RouteMapDrawing
 
                 // 绘制站点名称，英文前加一个空格
                 // 中文Y方向在字的实际高度下方，约有1/3个fontsize高度的空白
-                g.DrawString(theline.getValue().getCh(), chfont, Brushes.Black,
+                g.DrawString(theline.getValue().getCh(), chfont,
+                    // 未开通则灰色
+                    theline.getValue().getIsOpenSt() ? Brushes.Black : new SolidBrush(notopencolor),
                     interchangewidth + R + st_line_d,
                     st_leftuppoint + R - (stchlength.Height - stchfontsize / 3) / 2);
-                g.DrawString(" " + theline.getValue().getEn(), enfont, Brushes.Black,
+                g.DrawString(" " + theline.getValue().getEn(), enfont,
+                    // 未开通则灰色
+                    theline.getValue().getIsOpenSt() ? Brushes.Black : new SolidBrush(notopencolor),
                     interchangewidth + R + st_line_d + stchlength.Width,
                     st_leftuppoint + R + (stchlength.Height - stchfontsize / 3) / 2 - (stenlength.Height - stenfontsize / 3));
-                //g.DrawRectangle(Pens.Black, interchangewidth + R + st_line_d,
-                //   st_leftuppoint + R - (stchlength.Height / 2),
-                //  stchlength.Width, stchlength.Height);
-
+                
                 // 步进
                 st_leftuppoint = st_leftuppoint + st_st_d;
                 theline.next();
@@ -307,6 +366,8 @@ namespace RouteMapDrawing
             cmbBoxNo.EndUpdate();
             // 选中ComboBox为最后一个值
             cmbBoxNo.Text = theline.getLength().ToString();
+            // 保证随着数据添加自动下滚
+            lstViewLine.Items[lstViewLine.Items.Count - 1].EnsureVisible();
         }
 
         // 删除站点
@@ -370,6 +431,13 @@ namespace RouteMapDrawing
                 int.Parse(tbColorG.Text), int.Parse(tbColorB.Text));
         }
 
+        // 设置未开通的颜色
+        private void button1_Click(object sender, EventArgs e)
+        {
+            notopencolor = Color.FromArgb(int.Parse(tbColorR.Text),
+                int.Parse(tbColorG.Text), int.Parse(tbColorB.Text));
+        }
+
         // 右键弹出菜单
         private void lstViewLine_MouseClick(object sender, MouseEventArgs e)
         {
@@ -397,7 +465,7 @@ namespace RouteMapDrawing
             // 创建新窗体
             FormListviewEdit formedit = new FormListviewEdit();
             formedit.fatherform = this;
-            formedit.editNo = int.Parse(lstViewLine.SelectedItems[0].Text);
+            formedit.editNo = int.Parse(lstViewLine.SelectedItems[0].Text); // 序号
 
             //Hide();
             formedit.ShowDialog();  // 使得当前窗口之外的操作不能进行

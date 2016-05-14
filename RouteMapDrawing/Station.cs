@@ -22,6 +22,10 @@ namespace RouteMapDrawing
         const int delta = 50; // 默认的距离
         string linenum;  // 途经的线路数
 
+        // 该站是否开通
+        bool isopenst = true;
+        bool isopensection = true; // 该站到下一站之间是否开通
+
         public Station(String ch, String en, string Line = "", int xx = 0, int yy = 0)
         {
             chname = ch;
@@ -60,11 +64,29 @@ namespace RouteMapDrawing
             y = newy;
         }
 
+        // 获取开通信息
+        public bool getIsOpenSt()
+        {
+            return isopenst;
+        }
+
+        public bool getIsOpenSection()
+        {
+            return isopensection;
+        }
+
+        // 更改开通信息
+        public void setIsOpen(bool sta, bool sec)
+        {
+            isopenst = sta;
+            isopensection = sec;
+        }
+
         // 更改换乘信息
         public void setInterchange(string intertype, string interline)
         {
-            // intertype为空表示清空换乘信息
-            if (intertype == "")
+            // intertype/interline为空表示清空换乘信息
+            if (intertype == "" || interline=="")
             {
                 linenum = "";
                 return;
