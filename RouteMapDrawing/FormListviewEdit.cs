@@ -31,6 +31,8 @@ namespace RouteMapDrawing
             // EditingStation
             cmBoxEditingStation.DropDownStyle = ComboBoxStyle.DropDownList;
             cmBoxEditingStation.Items.Clear();
+
+            editNo = Form1.showingLineNo - 1; // 正编辑的线路序号
             Form1.theline.gotoHead();
             while (!Form1.theline.isEnd())
             {

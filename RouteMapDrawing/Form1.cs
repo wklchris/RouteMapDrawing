@@ -58,9 +58,11 @@ namespace RouteMapDrawing
             // 显示水印的右边距
             tbWMRightMargin.Text = watermarkrightmargin.ToString();
             tbLineLocation.Text = interchangewidth.ToString();
+
+            tbStrightmargin.Text = stnamerightmargin.ToString();
         }
 
-        public static string version = "v0.11"; // 当前版本
+        public static string version = "v0.12"; // 当前版本
         public static string drawingdate = DateTime.Now.ToShortDateString().ToString();
         public static string mapversion = "Ver1.0";
 
@@ -69,6 +71,7 @@ namespace RouteMapDrawing
         string filetype = ".jpg"; // 默认的文件扩展名
         public Bitmap image = new Bitmap(100, 100);
         public static string showingLine; // 正在编辑的路线
+        public static int showingLineNo; // 正在编辑的路线的序号
         public static Line theline = new Line("地铁", Color.FromArgb(0, 122, 204)); // 线路
 
         // 绘制所需的参数（填充颜色在theline.hatchcolor中）
@@ -89,12 +92,13 @@ namespace RouteMapDrawing
 
         public static int stchfontsize = 80;    // 中文站点字号
         public static int stenfontsize = 60;    // 英文站点字号
+        public static int stnamerightmargin = 600; // 站点名右侧到图片右侧的距离
         public static int R = 60;               // 站点圆的半径
         public static int st_st_d = 200;        // 相邻站点圆的圆心距离
         public static int line_r = 50;      // 线路宽度的一半
         public static int st_line_d = 40;       // 站点圆右端到中文站点名左端的距离 
 
-        public static int interchangewidth = 400; // 预设的换乘信息区域宽度
+        public static int interchangewidth = 1000; // 预设的换乘信息区域宽度
         public static int linestart = 600;      // 站点顶端线路弧到图片顶端的距离
         public static int lineend = 100;        // 站点底端线路弧到图片底端的距离
 
@@ -165,7 +169,8 @@ namespace RouteMapDrawing
             if (tbLineLocation.Text!="")
                 interchangewidth = int.Parse(tbLineLocation.Text);
             // 获取图片的长和宽
-            int templength = interchangewidth + line_r + st_line_d + theline.getLongest(chfont, enfont);
+            stnamerightmargin = int.Parse(tbStrightmargin.Text);
+            int templength = interchangewidth + line_r + st_line_d + theline.getLongest(chfont, enfont) + stnamerightmargin;
             int image_width = (int)Math.Ceiling(title.Length * 1.6 * titlefontsize); // 汉字两倍宽
             image_width = Math.Max(Math.Max(templength, image_width), wm_imagewidth * 2 + watermarkrightmargin);
             int image_height = linestart + line_r * 2 + R * 2 + (theline.getLength() - 1) * st_st_d + lineend;
@@ -210,25 +215,90 @@ namespace RouteMapDrawing
             }
 
             // 绘制线路中心线
+            // 先按照没有“未开通的站点”进行绘制
+            notopenpen.Color = notopencolor;
+            GraphicsPath fillpath = new GraphicsPath(); // 开通段的填充
+            Rectangle linerect = new Rectangle(interchangewidth - line_r, linestart + line_r,
+                 2 * line_r, (theline.getLength() - 1) * st_st_d + R * 2);
+            //g.DrawRectangle(linepen, linerect);
+            g.FillRectangle(new SolidBrush(theline.getColor()), linerect);
+            // 未开通段（不包括圆弧）的填充
+            GraphicsPath fillnotopenpath = new GraphicsPath();
+
             // 画顶端圆弧
+            theline.gotoHead();
             Rectangle toparc = new Rectangle(interchangewidth - line_r, linestart,
                 2 * line_r, 2 * line_r);
-            g.DrawEllipse(linepen, toparc);
-            // 画整个线路长
-            Rectangle linerect = new Rectangle(interchangewidth - line_r, linestart + line_r,
-                2 * line_r, (theline.getLength() - 1) * st_st_d + R * 2);
-            g.DrawRectangle(linepen, linerect);
+            if (!theline.getValue().getIsOpenSection())  // 如果开通，画黑色。否则画灰色
+            {
+                g.DrawEllipse(linepen, toparc);
+                g.FillEllipse(new SolidBrush(notopencolor), toparc);
+            }
+            else
+            {
+                g.DrawEllipse(linepen, toparc);
+                g.FillEllipse(new SolidBrush(theline.getColor()), toparc);
+            }
+
             // 画底端圆弧
             Rectangle bottomarc = new Rectangle(interchangewidth - line_r,
                 linestart + (theline.getLength() - 1) * st_st_d + R * 2, 2 * line_r, 2 * line_r);
-            g.DrawEllipse(linepen, bottomarc);
-            // 求它们的并集
-            GraphicsPath fillpath = new GraphicsPath();
-            fillpath.AddEllipse(toparc);
-            fillpath.AddEllipse(bottomarc);
-            Region fillreg = new Region(linerect);
-            fillreg.Union(fillpath); // 求并集
-            g.FillRegion(new SolidBrush(theline.getColor()), fillreg);
+            // 将current移动到尾部
+            theline.gotoSt(theline.getLength());
+            if (!theline.getValue().getIsOpenSection())  // 如果开通，画黑色。否则画灰色
+            {
+                g.DrawEllipse(linepen, bottomarc);
+                g.FillEllipse(new SolidBrush(notopencolor), bottomarc);
+            }
+            else
+            {
+                g.DrawEllipse(linepen, bottomarc);
+                g.FillEllipse(new SolidBrush(theline.getColor()), bottomarc);
+            }
+            
+            // 画未开通段
+            theline.gotoHead();
+            int notopenstart = 0, notopenend = 0; //  未开通的区段
+            while(!theline.isEnd())
+            {          
+                if (!theline.getValue().getIsOpenSection()) // 如果未开通
+                {
+                    notopenstart = theline.getNo();
+                    notopenend = theline.getNotOpenSection(notopenstart); // 获取未开通段的末尾 
+
+                    // 填充区域获取。如果notopenstart=1则有不同
+                    int notopenlength = (notopenend - notopenstart + 1) * st_st_d;
+                    if (notopenstart==1) // 矩形长度
+                    {
+                        if (notopenend == theline.getLength()) // 从头到尾
+                            notopenlength += 2 * R - st_st_d / 2 - line_r;
+                        notopenlength -= st_st_d / 2 - R; // 从头不到尾
+                    }
+                    else
+                    {
+                        if (notopenend == theline.getLength())    // 不从头，到尾
+                            notopenlength -= st_st_d / 2 - R;
+                        // 不从头，不到尾的情况无需调整
+                    }
+
+                    fillnotopenpath.AddRectangle(new Rectangle(interchangewidth - line_r,
+                        linestart + line_r + (notopenstart - 1) * st_st_d + (notopenstart == 1 ? 0 : R - st_st_d / 2),
+                        2 * line_r,
+                        notopenlength)); 
+
+                    // 步进
+                    notopenstart = Math.Min(notopenend + 1, theline.getLength());
+                    notopenend = notopenstart;
+                }
+                else  // 如果开通
+                {
+                    notopenstart++;
+                    notopenend++;
+                }
+                theline.gotoSt(notopenstart);   // 移动current
+                theline.next();
+            }
+            g.FillPath(new SolidBrush(notopencolor), fillnotopenpath);
 
             // 绘制站点
             int st_leftuppoint = linestart + line_r; // 第一个站点圆的正交外切矩形的左上角Y值
@@ -319,27 +389,34 @@ namespace RouteMapDrawing
             if (tbname.Text == "")
                 return;
 
-            // 用空格分隔汉语和英文
-            string str = tbname.Text;
-            int splitnum = str.IndexOf(" ");
-            string strchname = str.Substring(0, splitnum);
-            string strenname = str.Substring(splitnum + 1);
-
-            // 删除句首空格
-            while (true)
+            // 按行分割
+            string str = "", strchname = "", strenname = "";
+            int splitnum = 0;
+            string[] strArr = tbname.Text.Split('\n');
+            for (int i = 0; i < strArr.Length; i++)
             {
-                if (str.Substring(0, 1) == " ")
-                    str = str.Remove(0, 1);
-                else
-                    break;
-            }
+                // 用空格分隔汉语和英文
+                str = strArr[i];
+                splitnum = str.IndexOf(" ");
+                strchname = str.Substring(0, splitnum);
+                strenname = str.Substring(splitnum + 1);
 
-            Station thestation = new Station(strchname, strenname);
-            if (cmbBoxNo.Text == "")
-                theline.insert(thestation);
-            else
-                theline.insert(thestation, int.Parse(cmbBoxNo.Text));
-            showLineStation();
+                // 删除句首空格
+                while (true)
+                {
+                    if (str.Substring(0, 1) == " ")
+                        str = str.Remove(0, 1);
+                    else
+                        break;
+                }
+
+                if (cmbBoxNo.Text == "")
+                    theline.insert(new Station(strchname, strenname));
+                else
+                    theline.insert(new Station(strchname, strenname), int.Parse(cmbBoxNo.Text));
+
+                showLineStation();
+            }
             tbname.Text = "";
         }
 
@@ -347,11 +424,13 @@ namespace RouteMapDrawing
         private void showLineStation()
         {   
             // 排序
-            theline.giveNo();
-            theline.gotoHead();
             lstViewLine.Items.Clear();
             cmbBoxNo.Items.Clear();
+            if (theline.isEmpty())  // 如果Line为空
+                return;
             cmbBoxNo.Items.Add(0);
+            theline.giveNo();
+            theline.gotoHead();
 
             cmbBoxNo.BeginUpdate();
             while (!theline.isEnd())
@@ -392,7 +471,10 @@ namespace RouteMapDrawing
         private void lstViewLine_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lstViewLine.SelectedItems.Count > 0)
+            {
                 cmbBoxNo.Text = lstViewLine.SelectedItems[0].Text;
+                showingLineNo = int.Parse(lstViewLine.SelectedItems[0].Text);
+            }
         }
 
         // 颜色调节
@@ -491,6 +573,22 @@ namespace RouteMapDrawing
             if (lstViewLine.SelectedItems.Count > 0)
                 cmbBoxNo.Text = lstViewLine.SelectedItems[0].Text;
             btnDeleteStation_Click(sender, e);
+        }
+
+        // 清空线路
+        private void MenuClearAll_Click(object sender, EventArgs e)
+        {
+            // 删除提示框
+            DialogResult deleteflag = MessageBox.Show("确认要清空该线路所有站点吗？",
+                "警告", MessageBoxButtons.YesNo);
+            if (deleteflag == DialogResult.No)
+                return;
+            else
+            {
+                theline.Clear();
+                // 如果删除成功则刷新ListView
+                showLineStation();
+            } 
         }
 
         // 生成图片并在picbox中显示

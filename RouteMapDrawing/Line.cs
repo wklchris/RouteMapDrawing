@@ -72,6 +72,25 @@ namespace RouteMapDrawing
             return current.No;
         }
 
+        // 返回从给定序号开始未开通的一个段
+        public int getNotOpenSection(int startNo)
+        {
+            //gotoHead();
+            int endNo = startNo;
+            gotoSt(startNo);
+            
+            while(!isEnd())
+            {
+                if (startNo == getNo() && getValue().getIsOpenSection()) // 如果startNo站点开通了
+                    return -1;
+                if (!getValue().getIsOpenSection() && getNo() > startNo) // 如果未开通
+                    endNo++;
+                next();
+            }
+            gotoSt(startNo); // current回移
+            return endNo;
+        }
+
         // 返回线路名称
         public string getName()
         {
@@ -185,6 +204,15 @@ namespace RouteMapDrawing
                 return true;
             }
             return false;
+        }
+
+        // 清空站点
+        public void Clear()
+        {
+            gotoHead();
+            head = null;
+            tail = null;
+            current = null;
         }
 
         // 找到字符最长的站点，并返回这个长度

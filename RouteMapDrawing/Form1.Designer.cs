@@ -56,6 +56,7 @@
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
             this.btnSetBkColor = new System.Windows.Forms.Button();
             this.btnSetLineColor = new System.Windows.Forms.Button();
             this.picBoxShowColor = new System.Windows.Forms.PictureBox();
@@ -95,7 +96,9 @@
             this.MenuEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuGiveUpInter = new System.Windows.Forms.ToolStripMenuItem();
-            this.button1 = new System.Windows.Forms.Button();
+            this.tbStrightmargin = new System.Windows.Forms.TextBox();
+            this.lbStrightmargin = new System.Windows.Forms.Label();
+            this.MenuClearAll = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.picBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -113,7 +116,7 @@
             // btnDraw
             // 
             this.btnDraw.Font = new System.Drawing.Font("宋体", 12F);
-            this.btnDraw.Location = new System.Drawing.Point(959, 126);
+            this.btnDraw.Location = new System.Drawing.Point(959, 103);
             this.btnDraw.Margin = new System.Windows.Forms.Padding(4);
             this.btnDraw.Name = "btnDraw";
             this.btnDraw.Size = new System.Drawing.Size(121, 37);
@@ -141,7 +144,7 @@
             // 
             // tbPath
             // 
-            this.tbPath.Location = new System.Drawing.Point(815, 53);
+            this.tbPath.Location = new System.Drawing.Point(815, 30);
             this.tbPath.Name = "tbPath";
             this.tbPath.Size = new System.Drawing.Size(323, 30);
             this.tbPath.TabIndex = 3;
@@ -149,7 +152,7 @@
             // lbPath
             // 
             this.lbPath.AutoSize = true;
-            this.lbPath.Location = new System.Drawing.Point(720, 56);
+            this.lbPath.Location = new System.Drawing.Point(720, 33);
             this.lbPath.Name = "lbPath";
             this.lbPath.Size = new System.Drawing.Size(89, 20);
             this.lbPath.TabIndex = 4;
@@ -158,7 +161,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(720, 92);
+            this.label1.Location = new System.Drawing.Point(720, 69);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(69, 20);
             this.label1.TabIndex = 6;
@@ -166,7 +169,7 @@
             // 
             // tbFilename
             // 
-            this.tbFilename.Location = new System.Drawing.Point(815, 89);
+            this.tbFilename.Location = new System.Drawing.Point(815, 66);
             this.tbFilename.Name = "tbFilename";
             this.tbFilename.Size = new System.Drawing.Size(378, 30);
             this.tbFilename.TabIndex = 5;
@@ -174,7 +177,7 @@
             // btnBrowse
             // 
             this.btnBrowse.Font = new System.Drawing.Font("宋体", 9F);
-            this.btnBrowse.Location = new System.Drawing.Point(1153, 53);
+            this.btnBrowse.Location = new System.Drawing.Point(1153, 30);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(40, 27);
             this.btnBrowse.TabIndex = 7;
@@ -184,7 +187,7 @@
             // 
             // btnShowpic
             // 
-            this.btnShowpic.Location = new System.Drawing.Point(815, 125);
+            this.btnShowpic.Location = new System.Drawing.Point(815, 102);
             this.btnShowpic.Name = "btnShowpic";
             this.btnShowpic.Size = new System.Drawing.Size(114, 35);
             this.btnShowpic.TabIndex = 8;
@@ -206,7 +209,7 @@
             this.lstViewLine.Location = new System.Drawing.Point(6, 0);
             this.lstViewLine.MultiSelect = false;
             this.lstViewLine.Name = "lstViewLine";
-            this.lstViewLine.Size = new System.Drawing.Size(466, 296);
+            this.lstViewLine.Size = new System.Drawing.Size(466, 269);
             this.lstViewLine.TabIndex = 9;
             this.lstViewLine.UseCompatibleStateImageBehavior = false;
             this.lstViewLine.View = System.Windows.Forms.View.Details;
@@ -244,7 +247,7 @@
             // 
             // btnAddStation
             // 
-            this.btnAddStation.Location = new System.Drawing.Point(287, 346);
+            this.btnAddStation.Location = new System.Drawing.Point(287, 374);
             this.btnAddStation.Name = "btnAddStation";
             this.btnAddStation.Size = new System.Drawing.Size(104, 38);
             this.btnAddStation.TabIndex = 10;
@@ -254,15 +257,17 @@
             // 
             // tbname
             // 
-            this.tbname.Location = new System.Drawing.Point(100, 308);
+            this.tbname.AcceptsReturn = true;
+            this.tbname.Location = new System.Drawing.Point(100, 275);
+            this.tbname.Multiline = true;
             this.tbname.Name = "tbname";
-            this.tbname.Size = new System.Drawing.Size(369, 30);
+            this.tbname.Size = new System.Drawing.Size(369, 93);
             this.tbname.TabIndex = 11;
             // 
             // lbChname
             // 
             this.lbChname.AutoSize = true;
-            this.lbChname.Location = new System.Drawing.Point(9, 311);
+            this.lbChname.Location = new System.Drawing.Point(9, 313);
             this.lbChname.Name = "lbChname";
             this.lbChname.Size = new System.Drawing.Size(69, 20);
             this.lbChname.TabIndex = 13;
@@ -270,7 +275,7 @@
             // 
             // btnDeleteStation
             // 
-            this.btnDeleteStation.Location = new System.Drawing.Point(408, 346);
+            this.btnDeleteStation.Location = new System.Drawing.Point(408, 374);
             this.btnDeleteStation.Name = "btnDeleteStation";
             this.btnDeleteStation.Size = new System.Drawing.Size(61, 38);
             this.btnDeleteStation.TabIndex = 15;
@@ -281,7 +286,7 @@
             // lbStationNo
             // 
             this.lbStationNo.AutoSize = true;
-            this.lbStationNo.Location = new System.Drawing.Point(6, 355);
+            this.lbStationNo.Location = new System.Drawing.Point(6, 383);
             this.lbStationNo.Name = "lbStationNo";
             this.lbStationNo.Size = new System.Drawing.Size(149, 20);
             this.lbStationNo.TabIndex = 17;
@@ -290,7 +295,7 @@
             // cmbBoxNo
             // 
             this.cmbBoxNo.FormattingEnabled = true;
-            this.cmbBoxNo.Location = new System.Drawing.Point(151, 352);
+            this.cmbBoxNo.Location = new System.Drawing.Point(151, 380);
             this.cmbBoxNo.Name = "cmbBoxNo";
             this.cmbBoxNo.Size = new System.Drawing.Size(119, 28);
             this.cmbBoxNo.TabIndex = 18;
@@ -310,10 +315,10 @@
             this.tabControl.Controls.Add(this.tabPage2);
             this.tabControl.Controls.Add(this.tabPage3);
             this.tabControl.Controls.Add(this.tabPage4);
-            this.tabControl.Location = new System.Drawing.Point(727, 171);
+            this.tabControl.Location = new System.Drawing.Point(727, 147);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(485, 430);
+            this.tabControl.Size = new System.Drawing.Size(485, 459);
             this.tabControl.TabIndex = 20;
             // 
             // tabPage1
@@ -329,7 +334,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 30);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(477, 396);
+            this.tabPage1.Size = new System.Drawing.Size(477, 425);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "数据";
             // 
@@ -357,9 +362,20 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 30);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(477, 396);
+            this.tabPage2.Size = new System.Drawing.Size(477, 425);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "图形信息";
+            // 
+            // button1
+            // 
+            this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.button1.Location = new System.Drawing.Point(310, 316);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(161, 49);
+            this.button1.TabIndex = 17;
+            this.button1.Text = "设为未开通颜色";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // btnSetBkColor
             // 
@@ -518,17 +534,19 @@
             // tabPage3
             // 
             this.tabPage3.BackColor = System.Drawing.Color.White;
+            this.tabPage3.Controls.Add(this.tbStrightmargin);
+            this.tabPage3.Controls.Add(this.lbStrightmargin);
             this.tabPage3.Controls.Add(this.tbLineLocation);
             this.tabPage3.Controls.Add(this.lbLineLocation);
             this.tabPage3.Location = new System.Drawing.Point(4, 30);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(477, 396);
+            this.tabPage3.Size = new System.Drawing.Size(477, 425);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "绘制参数";
             // 
             // tbLineLocation
             // 
-            this.tbLineLocation.Location = new System.Drawing.Point(131, 36);
+            this.tbLineLocation.Location = new System.Drawing.Point(122, 36);
             this.tbLineLocation.Name = "tbLineLocation";
             this.tbLineLocation.Size = new System.Drawing.Size(142, 30);
             this.tbLineLocation.TabIndex = 1;
@@ -685,7 +703,7 @@
             this.ckBoxOverwrite.AutoSize = true;
             this.ckBoxOverwrite.Checked = true;
             this.ckBoxOverwrite.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ckBoxOverwrite.Location = new System.Drawing.Point(1097, 134);
+            this.ckBoxOverwrite.Location = new System.Drawing.Point(1097, 111);
             this.ckBoxOverwrite.Name = "ckBoxOverwrite";
             this.ckBoxOverwrite.Size = new System.Drawing.Size(111, 24);
             this.ckBoxOverwrite.TabIndex = 21;
@@ -698,41 +716,54 @@
             this.LstViewMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuEdit,
             this.MenuDelete,
-            this.MenuGiveUpInter});
+            this.MenuGiveUpInter,
+            this.MenuClearAll});
             this.LstViewMenu.Name = "contextMenuStrip1";
-            this.LstViewMenu.Size = new System.Drawing.Size(175, 82);
+            this.LstViewMenu.Size = new System.Drawing.Size(175, 108);
             // 
             // MenuEdit
             // 
             this.MenuEdit.Name = "MenuEdit";
-            this.MenuEdit.Size = new System.Drawing.Size(174, 26);
+            this.MenuEdit.Size = new System.Drawing.Size(181, 26);
             this.MenuEdit.Text = "编辑";
             this.MenuEdit.Click += new System.EventHandler(this.MenuEdit_Click);
             // 
             // MenuDelete
             // 
             this.MenuDelete.Name = "MenuDelete";
-            this.MenuDelete.Size = new System.Drawing.Size(174, 26);
+            this.MenuDelete.Size = new System.Drawing.Size(181, 26);
             this.MenuDelete.Text = "删除站点";
             this.MenuDelete.Click += new System.EventHandler(this.MenuDelete_Click);
             // 
             // MenuGiveUpInter
             // 
             this.MenuGiveUpInter.Name = "MenuGiveUpInter";
-            this.MenuGiveUpInter.Size = new System.Drawing.Size(174, 26);
+            this.MenuGiveUpInter.Size = new System.Drawing.Size(181, 26);
             this.MenuGiveUpInter.Text = "清空换乘信息";
             this.MenuGiveUpInter.Click += new System.EventHandler(this.MenuGiveUpInter_Click);
             // 
-            // button1
+            // tbStrightmargin
             // 
-            this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button1.Location = new System.Drawing.Point(310, 316);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(161, 49);
-            this.button1.TabIndex = 17;
-            this.button1.Text = "设为未开通颜色";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.tbStrightmargin.Location = new System.Drawing.Point(162, 86);
+            this.tbStrightmargin.Name = "tbStrightmargin";
+            this.tbStrightmargin.Size = new System.Drawing.Size(102, 30);
+            this.tbStrightmargin.TabIndex = 3;
+            // 
+            // lbStrightmargin
+            // 
+            this.lbStrightmargin.AutoSize = true;
+            this.lbStrightmargin.Location = new System.Drawing.Point(17, 89);
+            this.lbStrightmargin.Name = "lbStrightmargin";
+            this.lbStrightmargin.Size = new System.Drawing.Size(139, 20);
+            this.lbStrightmargin.TabIndex = 2;
+            this.lbStrightmargin.Text = "站点名右边距:";
+            // 
+            // MenuClearAll
+            // 
+            this.MenuClearAll.Name = "MenuClearAll";
+            this.MenuClearAll.Size = new System.Drawing.Size(181, 26);
+            this.MenuClearAll.Text = "清空所有站点";
+            this.MenuClearAll.Click += new System.EventHandler(this.MenuClearAll_Click);
             // 
             // Form1
             // 
@@ -753,7 +784,7 @@
             this.Font = new System.Drawing.Font("宋体", 12F);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
-            this.Text = "RouteMap Drawing System v0.10";
+            this.Text = "How to give this software a name?";
             ((System.ComponentModel.ISupportInitialize)(this.picBox1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.tabControl.ResumeLayout(false);
@@ -844,5 +875,8 @@
         private System.Windows.Forms.TextBox tbLineLocation;
         private System.Windows.Forms.Label lbLineLocation;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox tbStrightmargin;
+        private System.Windows.Forms.Label lbStrightmargin;
+        private System.Windows.Forms.ToolStripMenuItem MenuClearAll;
     }
 }
